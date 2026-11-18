@@ -23,7 +23,7 @@ Create these under a **foundation email address** (not a personal one), with two
 
 1. **Supabase** (database, sign-in, photos) — supabase.com
 2. **Netlify** or **Cloudflare Pages** (hosting) — connected to the GitHub repository
-3. **GitHub** — the repository `kingpenthouseinfo-cell/kingpenthouse1` (folder `sbc/`)
+3. **GitHub** — the repository `sbc-global-foundation`
 4. **An email-sending service** for sign-in emails (see §4.4) — e.g. Resend, Brevo or a Google Workspace mailbox
 5. The **domain registrar** — already yours; not changed by anything here
 
