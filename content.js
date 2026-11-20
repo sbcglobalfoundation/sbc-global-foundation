@@ -28,10 +28,11 @@
   function valid(c) {
     if (!c || typeof c !== 'object' || !Array.isArray(c.programmes) || !c.programmes.length) return false;
     if (!Array.isArray(c.updates) || !c.site || typeof c.site !== 'object') return false;
+    if (c.gallery !== undefined && !Array.isArray(c.gallery)) return false;
     for (var i = 0; i < c.programmes.length; i++) {
       var p = c.programmes[i];
       if (!p || typeof p.name !== 'string' || !p.name || typeof p.short_label !== 'string' ||
-          !Array.isArray(p.images) || p.position !== i) return false;
+          !Array.isArray(p.images) || p.position !== i || (p.videos !== undefined && !Array.isArray(p.videos))) return false;
     }
     for (var j = 0; j < c.updates.length; j++) {
       var u = c.updates[j];
@@ -60,5 +61,14 @@
     : Promise.resolve({ source: 'bundled', content: null });
   var ready = Promise.race([settled, new Promise(function (res) { setTimeout(function () { res(fallback); }, 1500); })]);
 
-  window.SBCContent = { img: img, ready: ready, settled: settled, configured: configured, valid: valid };
+  // An uploaded programme video lives in the "videos" bucket (bundled ones are in assets/).
+  function video(src) {
+    src = String(src == null ? '' : src);
+    if (!src) return '';
+    if (/^(https?:)?\/\//i.test(src) || src.charAt(0) === '/') return src;
+    if (src.indexOf('/') > -1) return base + '/storage/v1/object/public/videos/' + src.split('/').map(encodeURIComponent).join('/');
+    return 'assets/' + src;
+  }
+
+  window.SBCContent = { img: img, video: video, ready: ready, settled: settled, configured: configured, valid: valid };
 })();
