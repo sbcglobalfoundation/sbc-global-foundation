@@ -4,6 +4,8 @@
 <title>SBC Global Foundation · Love towards humanity</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="config.js"></script>
+<script src="content.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -24,7 +26,7 @@ a:hover{color:#123A27}
 @keyframes pgFade{from{opacity:0}to{opacity:1}}
 </style>
 </helmet>
-<div style="font-family:'EB Garamond',serif;background:#fff;color:#1D1B17;overflow-x:clip">
+<div style="font-family:'EB Garamond',serif;background:#fff;color:#1D1B17;overflow-x:clip;visibility:{{ pageVis }}">
 
 <a href="#home" aria-label="SBC Global Foundation home" style="position:fixed;top:{{ badgeTop }};left:0;right:0;margin:0 auto;z-index:61;display:{{ badgeDisp }};width:{{ badgeSize }};height:{{ badgeSize }};opacity:{{ badgeOp }};transform:scale({{ badgeScale }});pointer-events:{{ badgePe }};transition:all .3s cubic-bezier(.075,.82,.165,1) .5s">
 <span style="position:absolute;inset:3%;border-radius:50%;background:#fff;box-shadow:0 8px 30px rgba(0,0,0,.25)"></span>
@@ -70,7 +72,7 @@ a:hover{color:#123A27}
 
 <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
 <section style="position:sticky;top:0;height:100svh;min-height:{{ heroMin }};overflow:hidden;display:flex;align-items:flex-start;background:#0A3D28;color:#fff">
-<img src="assets/{{ homeImg }}" alt="Children with their new school bags, water delivery and care for elders" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ homePos }};animation:pgKen 2.8s cubic-bezier(.2,.7,.1,1) both">
+<img src="{{ homeUrl }}" alt="Children with their new school bags, water delivery and care for elders" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ homePos }};animation:pgKen 2.8s cubic-bezier(.2,.7,.1,1) both">
 <div style="position:absolute;inset:0;background:{{ homeShade }}"></div>
 <div style="position:relative;width:100%;max-width:1360px;margin:0 auto;padding:{{ heroTop }} clamp(20px,4vw,64px) 0;animation:pgUp 1.1s .3s both">
 
@@ -87,9 +89,31 @@ a:hover{color:#123A27}
 <div style="font-family:'Caveat',cursive;font-size:38px;color:#1F5C3E;margin-top:32px">— the Old Bens</div>
 </div>
 </section>
+<sc-if value="{{ hasHomeUpdates }}" hint-placeholder-val="{{ false }}">
+<section aria-label="Latest updates" style="position:relative;background:#FBF8EF;padding:clamp(70px,9vw,120px) clamp(20px,4vw,48px);border-top:1px solid #E6E0D2">
+<div style="max-width:1240px;margin:0 auto">
+<div style="font-family:'Courier Prime',monospace;font-size:13px;letter-spacing:.06em;color:#6B655A">FROM THE FIELD</div>
+<h2 style="font-weight:400;font-size:clamp(40px,5vw,72px);line-height:1;letter-spacing:-.02em;margin:14px 0 0">Latest <span style="font-style:italic;color:#1F5C3E">updates.</span></h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(28px,4vw,48px);margin-top:clamp(36px,5vw,56px);align-items:start">
+<sc-for list="{{ homeUpdates }}" as="u" hint-placeholder-count="3">
+<a href="{{ u.href }}" style="display:block;background:#fff;padding:12px 12px 22px;box-shadow:0 1px 2px rgba(0,0,0,.08),0 22px 44px -14px rgba(40,30,10,.3);color:#3D3A33;transition:transform .4s" style-hover="transform:translateY(-6px)">
+<sc-if value="{{ u.hasLead }}" hint-placeholder-val="{{ true }}"><img src="{{ u.leadUrl }}" alt="" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#E6E0D2"></sc-if>
+<div style="padding:{{ u.textPad }}">
+<div style="font-family:'Courier Prime',monospace;font-size:12px;color:#6B655A">{{ u.date }}<sc-if value="{{ u.hasTag }}" hint-placeholder-val="{{ false }}"> · {{ u.tag }}</sc-if></div>
+<h3 style="font-weight:400;font-size:clamp(26px,2.6vw,32px);line-height:1.1;letter-spacing:-.01em;margin:10px 0 0;color:#1D1B17;overflow-wrap:anywhere">{{ u.title }}</h3>
+<p style="font-size:18px;line-height:1.5;margin:12px 0 0;overflow-wrap:anywhere">{{ u.excerpt }}</p>
+<div style="margin-top:14px;font-family:'Courier Prime',monospace;font-weight:700;font-size:13px;color:#1F5C3E">READ MORE →</div>
+</div>
+</a>
+</sc-for>
+</div>
+<sc-if value="{{ moreUpdates }}" hint-placeholder-val="{{ false }}"><div style="margin-top:36px"><a href="#updates" style="display:inline-flex;align-items:center;gap:10px;font-family:'Courier Prime',monospace;font-weight:700;font-size:14px;letter-spacing:.06em;color:#1F5C3E;border:1px solid #1F5C3E;border-radius:999px;padding:14px 26px">ALL UPDATES →</a></div></sc-if>
+</div>
+</section>
+</sc-if>
 <sc-for list="{{ slides }}" as="s" hint-placeholder-count="4">
 <section style="position:sticky;top:0;height:100svh;min-height:{{ heroMin }};overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center;background:#0A3D28;color:#fff">
-<sc-if value="{{ isMob }}" hint-placeholder-val="{{ false }}"><img src="assets/{{ s.img }}" alt="" aria-hidden="true" style="position:absolute;inset:-40px;width:calc(100% + 80px);height:calc(100% + 80px);object-fit:cover;filter:blur(28px) saturate(1.1);opacity:.85"></sc-if><img src="assets/{{ s.img }}" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:{{ heroFit }};object-position:{{ heroPos }}">
+<sc-if value="{{ isMob }}" hint-placeholder-val="{{ false }}"><img src="{{ s.url }}" alt="" aria-hidden="true" style="position:absolute;inset:-40px;width:calc(100% + 80px);height:calc(100% + 80px);object-fit:cover;filter:blur(28px) saturate(1.1);opacity:.85"></sc-if><img src="{{ s.url }}" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:{{ heroFit }};object-position:{{ heroPos }}">
 <div style="position:absolute;inset:0;background:rgba(6,30,19,.5)"></div>
 <div style="position:relative;padding:0 24px">
 <div style="font-family:'Courier Prime',monospace;font-size:14px;letter-spacing:.08em;color:#CFE8D8">{{ s.k }}</div>
@@ -103,7 +127,7 @@ a:hover{color:#123A27}
 
 <sc-if value="{{ isSub }}" hint-placeholder-val="{{ false }}">
 <section style="position:sticky;top:0;height:{{ subH }};min-height:{{ heroMin }};overflow:hidden;display:flex;align-items:flex-start;background:#0A3D28;color:#fff">
-<sc-if value="{{ isMob }}" hint-placeholder-val="{{ false }}"><img src="assets/{{ hero.img }}" alt="" aria-hidden="true" style="position:absolute;inset:-40px;width:calc(100% + 80px);height:calc(100% + 80px);object-fit:cover;filter:blur(28px) saturate(1.1);opacity:.85"></sc-if><img src="assets/{{ hero.img }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:{{ heroFit }};object-position:{{ heroPos }};animation:pgKen 2.4s cubic-bezier(.2,.7,.1,1) both">
+<sc-if value="{{ isMob }}" hint-placeholder-val="{{ false }}"><img src="{{ heroUrl }}" alt="" aria-hidden="true" style="position:absolute;inset:-40px;width:calc(100% + 80px);height:calc(100% + 80px);object-fit:cover;filter:blur(28px) saturate(1.1);opacity:.85"></sc-if><img src="{{ heroUrl }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:{{ heroFit }};object-position:{{ heroPos }};animation:pgKen 2.4s cubic-bezier(.2,.7,.1,1) both">
 <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,30,19,.85) 0%,rgba(6,30,19,.6) 35%,rgba(6,30,19,.15) 70%,rgba(6,30,19,.3) 100%)"></div>
 <div style="position:relative;width:100%;max-width:1240px;margin:0 auto;padding:{{ heroTop }} clamp(20px,4vw,48px) 0;animation:pgUp 1s .2s both">
 <div style="font-family:'Courier Prime',monospace;font-size:14px;letter-spacing:.06em;color:#CFE8D8">{{ hero.k }}</div>
@@ -140,29 +164,51 @@ a:hover{color:#123A27}
 <div style="position:relative;justify-self:center;width:min(100%,420px)">
 <a onClick="{{ p.openMain }}" style="cursor:zoom-in;position:relative;display:block;width:min(100%,420px);background:#fff;padding:12px 12px 50px;box-shadow:0 1px 2px rgba(0,0,0,.08),0 22px 44px -14px rgba(40,30,10,.32);transform:rotate({{ p.rot }});transition:transform .45s;color:#3D3A33" style-hover="transform:rotate(0deg) translateY(-6px)">
 <span style="position:absolute;top:-13px;left:calc(50% - 46px);width:92px;height:27px;background:rgba(207,232,216,.9);transform:rotate(2deg)"></span>
-<sc-if value="{{ p.hasVideo }}" hint-placeholder-val="{{ false }}"><video src="assets/{{ p.video }}" poster="assets/{{ p.main }}" autoplay="" muted="" loop="" playsinline="" style="width:100%;aspect-ratio:5/4;object-fit:cover;display:block;background:#0A3D28"></video><span style="position:absolute;right:16px;bottom:12px;font-family:'Courier Prime',monospace;font-size:12px;color:#1F5C3E">{{ soundLabel }}</span></sc-if>
-<sc-if value="{{ p.noVideo }}" hint-placeholder-val="{{ true }}"><img src="assets/{{ p.main }}" alt="{{ p.t }}" style="width:100%;aspect-ratio:5/4;object-fit:cover;display:block"></sc-if>
+<sc-if value="{{ p.hasVideo }}" hint-placeholder-val="{{ false }}"><video src="{{ p.videoUrl }}" poster="{{ p.mainUrl }}" autoplay="" muted="" loop="" playsinline="" style="width:100%;aspect-ratio:5/4;object-fit:cover;display:block;background:#0A3D28"></video><span style="position:absolute;right:16px;bottom:12px;font-family:'Courier Prime',monospace;font-size:12px;color:#1F5C3E">{{ soundLabel }}</span></sc-if>
+<sc-if value="{{ p.noVideo }}" hint-placeholder-val="{{ true }}"><img src="{{ p.mainUrl }}" alt="{{ p.t }}" style="width:100%;aspect-ratio:5/4;object-fit:cover;display:block"></sc-if>
 <span style="position:absolute;left:16px;bottom:12px;font-style:italic;font-size:18px">{{ p.cap }}</span>
 </a>
-<sc-if value="{{ p.hasObj }}" hint-placeholder-val="{{ false }}"><img src="assets/{{ p.obj }}" alt="" aria-hidden="true" style="position:absolute;right:{{ objR }};bottom:{{ objB }};width:{{ objW }};height:auto;transform:rotate(9deg);filter:drop-shadow(0 18px 22px rgba(20,32,26,.35));pointer-events:none;animation:pgBob 5s ease-in-out infinite"></sc-if>
+<sc-if value="{{ p.hasObj }}" hint-placeholder-val="{{ false }}"><img src="{{ p.objUrl }}" alt="" aria-hidden="true" style="position:absolute;right:{{ objR }};bottom:{{ objB }};width:{{ objW }};height:auto;transform:rotate(9deg);filter:drop-shadow(0 18px 22px rgba(20,32,26,.35));pointer-events:none;animation:pgBob 5s ease-in-out infinite"></sc-if>
 </div>
 <div>
-<div style="font-family:'Courier Prime',monospace;font-size:13px;color:#6B655A">Entry {{ p.n }} · {{ p.m }}</div>
+<div style="font-family:'Courier Prime',monospace;font-size:13px;color:#6B655A">{{ p.meta }}</div>
 <h3 style="font-weight:400;font-size:clamp(38px,4vw,56px);line-height:1;letter-spacing:-.02em;margin:14px 0 0">{{ p.t }}</h3>
 <p style="font-size:clamp(18px,2.2vw,20px);line-height:1.55;color:#3D3A33;margin:18px 0 0;max-width:480px;text-wrap:pretty">{{ p.d }}</p>
 <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:28px">
 <sc-for list="{{ p.thumbs }}" as="t" hint-placeholder-count="3">
-<div onClick="{{ t.open }}" style="width:clamp(76px,22vw,96px);background:#fff;padding:5px 5px 16px;box-shadow:0 8px 18px -8px rgba(40,30,10,.4);cursor:zoom-in;transition:transform .3s" style-hover="transform:translateY(-4px) rotate(-2deg)"><img src="assets/{{ t.src }}" alt="{{ t.lab }}" loading="lazy" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block"><sc-if value="{{ t.hasLab }}" hint-placeholder-val="{{ false }}"><span style="display:block;margin-top:4px;font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:{{ t.labBg }}">{{ t.lab }}</span></sc-if></div>
+<div onClick="{{ t.open }}" style="width:clamp(76px,22vw,96px);background:#fff;padding:5px 5px 16px;box-shadow:0 8px 18px -8px rgba(40,30,10,.4);cursor:zoom-in;transition:transform .3s" style-hover="transform:translateY(-4px) rotate(-2deg)"><img src="{{ t.url }}" alt="{{ t.lab }}" loading="lazy" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block"><sc-if value="{{ t.hasLab }}" hint-placeholder-val="{{ false }}"><span style="display:block;margin-top:4px;font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:{{ t.labBg }}">{{ t.lab }}</span></sc-if></div>
 </sc-for>
 </div>
 </div>
+<sc-if value="{{ p.hasVideos }}" hint-placeholder-val="{{ false }}">
+<div style="grid-column:1/-1;border-top:1px solid #E6E0D2;padding-top:22px">
+<div style="font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:.06em;color:#6B655A">VIDEOS</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:22px;margin-top:16px">
+<sc-for list="{{ p.userVideos }}" as="uv" hint-placeholder-count="2">
+<figure style="margin:0;background:#fff;padding:8px;box-shadow:0 8px 18px -8px rgba(40,30,10,.4)">
+<sc-if value="{{ uv.isUp }}" hint-placeholder-val="{{ true }}"><video data-user-video="" src="{{ uv.url }}" poster="{{ uv.posterUrl }}" controls="{{ uv.on }}" playsinline="{{ uv.on }}" preload="metadata" style="width:100%;aspect-ratio:16/9;object-fit:contain;display:block;background:#0A3D28"></video></sc-if>
+<sc-if value="{{ uv.ytIdle }}" hint-placeholder-val="{{ false }}"><button onClick="{{ uv.play }}" aria-label="Play this video (from YouTube)" style="all:unset;cursor:pointer;display:block;position:relative;width:100%;aspect-ratio:16/9;background:#0A3D28"><img src="{{ uv.thumb }}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block"><span style="position:absolute;inset:0;margin:auto;width:64px;height:64px;border-radius:50%;background:rgba(251,248,240,.94);color:#0A3D28;display:grid;place-items:center;font-size:24px;padding-left:4px;box-shadow:0 6px 18px rgba(0,0,0,.35)">▶</span></button></sc-if>
+<sc-if value="{{ uv.ytPlay }}" hint-placeholder-val="{{ false }}"><iframe src="{{ uv.embed }}" title="Video on YouTube" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen="{{ uv.on }}" style="width:100%;aspect-ratio:16/9;border:0;display:block;background:#000"></iframe></sc-if>
+</figure>
+</sc-for>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{ p.hasUpdates }}" hint-placeholder-val="{{ false }}">
+<div style="grid-column:1/-1;border-top:1px solid #E6E0D2;padding-top:22px">
+<div style="font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:.06em;color:#6B655A">LATEST FROM THIS PROGRAMME</div>
+<sc-for list="{{ p.updates }}" as="pu" hint-placeholder-count="2">
+<a href="{{ pu.href }}" style="display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;padding:12px 0;border-bottom:1px dashed #E0D9C8;color:#1D1B17"><span style="font-family:'Courier Prime',monospace;font-size:12px;color:#6B655A;flex:none">{{ pu.date }}</span><span style="font-size:20px;line-height:1.25;overflow-wrap:anywhere;color:#1F5C3E">{{ pu.title }} →</span></a>
+</sc-for>
+</div>
+</sc-if>
 <sc-if value="{{ p.hasBA }}" hint-placeholder-val="{{ false }}">
 <div style="grid-column:1/-1;background:#0A3D28;color:#fff;padding:clamp(20px,3.5vw,44px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:clamp(28px,4vw,56px);align-items:start;box-shadow:0 30px 60px -30px rgba(10,61,40,.6)">
 <div key="{{ baKey }}" onTouchStart="{{ baTs }}" onTouchEnd="{{ baTe }}" style="grid-column:1/-1;position:relative;aspect-ratio:{{ baRatio }};display:grid;grid-template-columns:{{ baCols }};gap:2px;background:#fff;overflow:hidden;animation:pgFade .5s both">
-<div style="position:relative;overflow:hidden;background:#06281A"><img src="assets/{{ baBefore }}" alt="" aria-hidden="true" style="position:absolute;inset:-40px;width:calc(100% + 80px);height:calc(100% + 80px);object-fit:cover;filter:blur(30px) brightness(.55)"><img src="assets/{{ baBefore }}" alt="Before: {{ baTitle }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:{{ baFit }};object-position:{{ baBPos }}"></div>
+<div style="position:relative;overflow:hidden;background:#06281A"><img src="{{ baBeforeUrl }}" alt="" aria-hidden="true" style="position:absolute;inset:-40px;width:calc(100% + 80px);height:calc(100% + 80px);object-fit:cover;filter:blur(30px) brightness(.55)"><img src="{{ baBeforeUrl }}" alt="Before: {{ baTitle }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:{{ baFit }};object-position:{{ baBPos }}"></div>
 <div style="position:relative;overflow:hidden;background:#06281A">
-<sc-if value="{{ baAfterImg }}" hint-placeholder-val="{{ false }}"><img src="assets/{{ baAfter }}" alt="" aria-hidden="true" style="position:absolute;inset:-40px;width:calc(100% + 80px);height:calc(100% + 80px);object-fit:cover;filter:blur(30px) brightness(.55)"><img src="assets/{{ baAfter }}" alt="After: the rebuilt toilet" style="position:absolute;inset:0;width:100%;height:100%;object-fit:{{ baFit }}"></sc-if>
-<sc-if value="{{ baAfterVid }}" hint-placeholder-val="{{ false }}"><img src="assets/{{ baAfterBg }}" alt="" aria-hidden="true" style="position:absolute;inset:-40px;width:calc(100% + 80px);height:calc(100% + 80px);object-fit:cover;filter:blur(30px) brightness(.55)"><video key="{{ baAfter }}" src="assets/{{ baAfter }}.mp4" poster="assets/{{ baAfter }}-poster.png" autoplay="" muted="" loop="" playsinline="" aria-label="After: the rebuilt toilet" style="position:absolute;inset:0;width:100%;height:100%;object-fit:{{ baFit }}"></video></sc-if>
+<sc-if value="{{ baAfterImg }}" hint-placeholder-val="{{ false }}"><img src="{{ baAfterUrl }}" alt="" aria-hidden="true" style="position:absolute;inset:-40px;width:calc(100% + 80px);height:calc(100% + 80px);object-fit:cover;filter:blur(30px) brightness(.55)"><img src="{{ baAfterUrl }}" alt="After: the rebuilt toilet" style="position:absolute;inset:0;width:100%;height:100%;object-fit:{{ baFit }}"></sc-if>
+<sc-if value="{{ baAfterVid }}" hint-placeholder-val="{{ false }}"><img src="{{ baAfterBgUrl }}" alt="" aria-hidden="true" style="position:absolute;inset:-40px;width:calc(100% + 80px);height:calc(100% + 80px);object-fit:cover;filter:blur(30px) brightness(.55)"><video key="{{ baAfter }}" src="{{ baAfterVideoUrl }}" poster="{{ baAfterPosterUrl }}" autoplay="" muted="" loop="" playsinline="" aria-label="After: the rebuilt toilet" style="position:absolute;inset:0;width:100%;height:100%;object-fit:{{ baFit }}"></video></sc-if>
 </div>
 <span style="position:absolute;left:14px;top:14px;padding:7px 12px;border-radius:999px;background:rgba(10,20,14,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;pointer-events:none">Before</span>
 <span style="position:absolute;left:{{ baAfterTagL }};top:{{ baAfterTagT }};padding:7px 12px;border-radius:999px;background:#F6F1E1;color:#0A3D28;font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;pointer-events:none">After</span>
@@ -177,7 +223,7 @@ a:hover{color:#123A27}
 <sc-for list="{{ baSites }}" as="st" hint-placeholder-count="6">
 <button onClick="{{ st.pick }}" style="all:unset;cursor:pointer;display:grid;grid-template-columns:28px 52px minmax(0,1fr) auto;gap:14px;align-items:center;padding:10px 12px 10px 10px;border-bottom:1px solid rgba(255,255,255,.12);border-left:2px solid {{ st.line }};background:{{ st.bg }};color:{{ st.ink }};transition:background .25s,color .25s" style-hover="background:rgba(255,255,255,.08);color:#fff">
 <span style="font-family:'Courier Prime',monospace;font-size:12px;color:#CFE8D8">{{ st.n }}</span>
-<img src="assets/{{ st.thumb }}" alt="" loading="lazy" style="width:52px;height:52px;object-fit:cover;display:block">
+<img src="{{ st.thumbUrl }}" alt="" loading="lazy" style="width:52px;height:52px;object-fit:cover;display:block">
 <span style="font-size:19px;line-height:1.2">{{ st.t }}</span>
 <span style="display:flex;align-items:center;gap:7px;font-family:'Courier Prime',monospace;font-size:11px;color:#CFE8D8;white-space:nowrap"><span style="width:7px;height:7px;border-radius:50%;background:{{ st.dot }}"></span>{{ st.status }}</span>
 </button>
@@ -188,7 +234,7 @@ a:hover{color:#123A27}
 <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap"><div style="font-family:'Courier Prime',monospace;font-size:13px;color:#CFE8D8">After · filmed on handover</div><button onClick="{{ toggleBaSound }}" style="all:unset;cursor:pointer;padding:10px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.3);font-family:'Courier Prime',monospace;font-size:12px">{{ baSoundLabel }}</button></div>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(16px,2vw,24px);margin-top:18px">
 <sc-for list="{{ baFilms }}" as="fm" hint-placeholder-count="2">
-<figure style="margin:0"><video src="assets/{{ fm.src }}.mp4" poster="assets/{{ fm.src }}-poster.png" autoplay="" muted="{{ baMuted }}" loop="" playsinline="" preload="metadata" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#06281A"></video><figcaption style="font-style:italic;font-size:18px;color:#DCEBE1;margin-top:10px">{{ fm.cap }}</figcaption></figure>
+<figure style="margin:0"><video src="{{ fm.videoUrl }}" poster="{{ fm.posterUrl }}" autoplay="" muted="{{ baMuted }}" loop="" playsinline="" preload="metadata" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#06281A"></video><figcaption style="font-style:italic;font-size:18px;color:#DCEBE1;margin-top:10px">{{ fm.cap }}</figcaption></figure>
 </sc-for>
 </div>
 </div>
@@ -208,7 +254,7 @@ a:hover{color:#123A27}
 <div style="columns:{{ galCols }};column-gap:clamp(12px,2.2vw,28px)">
 <sc-for list="{{ gallery }}" as="g" hint-placeholder-count="12">
 <div onClick="{{ g.open }}" style="break-inside:avoid;margin-bottom:clamp(18px,2.5vw,32px);background:#fff;padding:{{ galPad }};position:relative;box-shadow:0 1px 2px rgba(0,0,0,.08),0 14px 30px -12px rgba(40,30,10,.35);transform:rotate({{ g.rot }});cursor:zoom-in;transition:transform .35s;animation:pgFade .6s both" style-hover="transform:rotate(0deg) scale(1.04)">
-<img src="assets/{{ g.src }}" alt="{{ g.cap }}" loading="lazy" style="width:100%;display:block">
+<img src="{{ g.url }}" alt="{{ g.cap }}" loading="lazy" style="width:100%;display:block">
 <span style="position:absolute;left:10px;right:8px;bottom:8px;font-style:italic;font-size:{{ galCapFs }};color:#3D3A33;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ g.cap }}</span>
 </div>
 </sc-for>
@@ -219,10 +265,10 @@ a:hover{color:#123A27}
 <sc-if value="{{ isAbout }}" hint-placeholder-val="{{ false }}">
 <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:clamp(40px,6vw,96px);align-items:center;padding:{{ galTop }} 0 clamp(80px,10vw,140px)">
 <div>
-<div style="font-family:'Courier Prime',monospace;font-size:13px;color:#6B655A">Since c. 1994</div>
-<h2 style="font-weight:400;font-size:clamp(44px,5vw,72px);line-height:1;letter-spacing:-.02em;margin:16px 0 0">Old boys of one college, <span style="font-style:italic;color:#1F5C3E">one motto.</span></h2>
-<p style="font-size:clamp(18px,1.6vw,21px);line-height:1.6;color:#3D3A33;margin:28px 0 0">SBC Global Foundation was started by the Old Bens — past pupils of St. Benedict College — to give something back to the communities around them.</p>
-<p style="font-size:clamp(18px,1.6vw,21px);line-height:1.6;color:#3D3A33;margin:18px 0 0">We are a small foundation. We don’t run programmes from afar — we trust the priests and sisters who already know every family by name, and <span style="font-style:italic">we help them help.</span></p>
+<div style="font-family:'Courier Prime',monospace;font-size:13px;color:#6B655A">{{ about.kicker }}</div>
+<h2 style="font-weight:400;font-size:clamp(44px,5vw,72px);line-height:1;letter-spacing:-.02em;margin:16px 0 0;overflow-wrap:anywhere">{{ about.heading }} <span style="font-style:italic;color:#1F5C3E">{{ about.headingItalic }}</span></h2>
+<p style="font-size:clamp(18px,1.6vw,21px);line-height:1.6;color:#3D3A33;margin:28px 0 0;white-space:pre-line;overflow-wrap:anywhere">{{ about.p1 }}</p>
+<p style="font-size:clamp(18px,1.6vw,21px);line-height:1.6;color:#3D3A33;margin:18px 0 0;white-space:pre-line;overflow-wrap:anywhere">{{ about.p2 }} <span style="font-style:italic">{{ about.p2Italic }}</span></p>
 </div>
 <div style="position:relative;justify-self:center;width:min(100%,520px);aspect-ratio:1/1">
 <span style="position:absolute;inset:3%;border-radius:50%;background:#fff;box-shadow:0 30px 60px -20px rgba(10,61,40,.35)"></span>
@@ -231,41 +277,83 @@ a:hover{color:#123A27}
 <img src="assets/sbc-emblem.png" alt="SBC Global Foundation emblem" style="position:absolute;left:20%;top:19%;width:60%;height:60%;object-fit:contain;mix-blend-mode:multiply">
 </div>
 </section>
+<sc-if value="{{ hasAboutLower }}" hint-placeholder-val="{{ true }}">
 <section style="padding:0 0 clamp(80px,10vw,140px);margin-right:calc(-1 * clamp(20px,4vw,48px))">
-<div style="font-family:'Courier Prime',monospace;font-size:13px;color:#1F5C3E;margin-bottom:24px">Who carries it out</div>
+<sc-if value="{{ hasPartners }}" hint-placeholder-val="{{ true }}">
+<div style="font-family:'Courier Prime',monospace;font-size:13px;color:#1F5C3E;margin-bottom:24px;overflow-wrap:anywhere">{{ about.groupsLabel }}</div>
 <div style="display:grid;grid-template-columns:{{ ptCols }};gap:clamp(14px,2vw,24px);padding-right:clamp(20px,4vw,48px);margin-bottom:clamp(56px,7vw,96px)">
 <sc-for list="{{ partners }}" as="pt" hint-placeholder-count="3">
 <div style="position:relative;padding:30px 28px 30px 64px;background-color:#FFFEFA;background-image:repeating-linear-gradient(180deg,transparent 0 33px,#D9E6F2 33px 34px);border:1px solid #E6E0D2;box-shadow:0 10px 24px -14px rgba(40,30,10,.3)">
 <div style="position:absolute;left:44px;top:0;bottom:0;width:1px;background:#E8A9A0"></div>
-<div style="font-family:'Courier Prime',monospace;font-weight:700;font-size:17px;line-height:34px">{{ pt.t }}</div>
-<p style="font-family:'Courier Prime',monospace;font-size:15px;line-height:34px;margin:0;color:#3D3A33">{{ pt.d }}</p>
+<sc-if value="{{ pt.hasImg }}" hint-placeholder-val="{{ false }}"><img src="{{ pt.imgUrl }}" alt="" loading="lazy" style="display:block;width:100%;aspect-ratio:4/3;object-fit:cover;margin:0 0 14px;background:#E6E0D2;box-shadow:0 4px 10px -4px rgba(40,30,10,.35)"></sc-if>
+<div style="font-family:'Courier Prime',monospace;font-weight:700;font-size:17px;line-height:34px;overflow-wrap:anywhere">{{ pt.t }}</div>
+<p style="font-family:'Courier Prime',monospace;font-size:15px;line-height:34px;margin:0;color:#3D3A33;overflow-wrap:anywhere">{{ pt.d }}</p>
 </div>
 </sc-for>
 </div>
+</sc-if>
+<sc-if value="{{ hasPeople }}" hint-placeholder-val="{{ true }}">
 <div style="background:#0A3D28;color:#fff;margin-left:calc(-1 * clamp(20px,4vw,48px));padding:clamp(48px,6vw,88px) 0 clamp(28px,3vw,44px) clamp(20px,4vw,48px)">
 <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-right:clamp(20px,4vw,48px);margin-bottom:clamp(24px,3vw,36px)">
 <div>
-<h3 style="color:#fff;font-weight:400;font-size:clamp(38px,4.6vw,64px);line-height:1;letter-spacing:-.02em;margin:12px 0 0">The people <span style="font-style:italic;color:#9FD9B4">on the ground.</span></h3>
+<h3 style="color:#fff;font-weight:400;font-size:clamp(38px,4.6vw,64px);line-height:1;letter-spacing:-.02em;margin:12px 0 0;overflow-wrap:anywhere">{{ about.stripHeading }} <span style="font-style:italic;color:#9FD9B4">{{ about.stripItalic }}</span></h3>
 </div>
-<span style="font-family:'Courier Prime',monospace;font-size:13px;color:#CFE8D8">scroll →</span>
+<sc-if value="{{ hasStrip }}" hint-placeholder-val="{{ true }}"><span style="font-family:'Courier Prime',monospace;font-size:13px;color:#CFE8D8">scroll →</span></sc-if>
 </div>
+<sc-if value="{{ hasStrip }}" hint-placeholder-val="{{ true }}">
 <div style="display:flex;gap:14px;overflow-x:auto;scrollbar-width:none;padding-right:clamp(20px,4vw,48px);scroll-snap-type:x mandatory">
 <sc-for list="{{ strip }}" as="p" hint-placeholder-count="8">
-<figure style="flex:none;margin:0;scroll-snap-align:start"><img src="assets/{{ p.img }}" alt="{{ p.cap }}" loading="lazy" style="display:block;height:{{ stripH }};width:auto"><figcaption style="padding-top:10px;font-family:'Courier Prime',monospace;font-size:12px;color:#CFE8D8">{{ p.n }} — {{ p.cap }}</figcaption></figure>
+<figure style="flex:none;margin:0;scroll-snap-align:start"><img src="{{ p.url }}" alt="{{ p.cap }}" loading="lazy" style="display:block;height:{{ stripH }};width:auto;background:#06281A"><figcaption style="padding-top:10px;font-family:'Courier Prime',monospace;font-size:12px;color:#CFE8D8">{{ p.label }}</figcaption></figure>
 </sc-for>
 </div>
+</sc-if>
+<sc-if value="{{ hasFaces }}" hint-placeholder-val="{{ true }}">
 <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin:clamp(32px,4vw,48px) clamp(20px,4vw,48px) 0 0;padding:8px 0 0;border-top:1px solid rgba(255,255,255,.18)">
-<span style="font-family:'Courier Prime',monospace;font-size:13px;color:#CFE8D8;white-space:nowrap">Faces behind it</span>
+<span style="font-family:'Courier Prime',monospace;font-size:13px;color:#CFE8D8;white-space:nowrap">{{ about.facesLabel }}</span>
 <div style="display:flex;align-items:center;padding:30px 0 30px 10px">
 <sc-for list="{{ faces }}" as="fc" hint-placeholder-count="9">
 <div onMouseEnter="{{ fc.on }}" onMouseLeave="{{ fc.off }}" onClick="{{ fc.on }}" style="position:relative;flex:none;width:{{ fc.size }};height:{{ fc.size }};margin-left:-10px;z-index:{{ fc.z }};transition:width .35s cubic-bezier(.2,.7,.1,1),height .35s cubic-bezier(.2,.7,.1,1);cursor:pointer">
-<img src="assets/{{ fc.img }}" alt="{{ fc.name }}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;object-position:{{ fc.pos }};border:3px solid #0A3D28;box-sizing:border-box;box-shadow:0 4px 14px rgba(0,0,0,.35);display:block">
-<div style="position:absolute;left:50%;top:calc(100% + 8px);transform:translateX(-50%) translateY({{ fc.ty }});opacity:{{ fc.op }};transition:opacity .25s,transform .3s;pointer-events:none;white-space:nowrap;background:#F6F1E1;color:#0A3D28;padding:7px 12px;border-radius:999px;font-family:'Courier Prime',monospace;font-size:12px;text-align:center"><b style="font-weight:700">{{ fc.name }}</b> · {{ fc.role }}</div>
+<img src="{{ fc.url }}" alt="{{ fc.alt }}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;object-position:{{ fc.pos }};border:3px solid #0A3D28;box-sizing:border-box;box-shadow:0 4px 14px rgba(0,0,0,.35);display:block;background:#06281A">
+<div style="position:absolute;left:50%;top:calc(100% + 8px);transform:translateX(-50%) translateY({{ fc.ty }});opacity:{{ fc.op }};transition:opacity .25s,transform .3s;pointer-events:none;white-space:nowrap;background:#F6F1E1;color:#0A3D28;padding:7px 12px;border-radius:999px;font-family:'Courier Prime',monospace;font-size:12px;text-align:center"><b style="font-weight:700">{{ fc.name }}</b><sc-if value="{{ fc.hasRole }}" hint-placeholder-val="{{ true }}"> · {{ fc.role }}</sc-if></div>
 </div>
 </sc-for>
 </div>
 </div>
+</sc-if>
 </div>
+</sc-if>
+</section>
+</sc-if>
+<sc-if value="{{ hasContact }}" hint-placeholder-val="{{ false }}">
+<section style="padding:0 0 clamp(80px,10vw,140px)">
+<div style="font-family:'Courier Prime',monospace;font-size:13px;color:#6B655A;margin-bottom:20px">Get in touch</div>
+<div style="display:flex;flex-direction:column;gap:12px;font-size:clamp(20px,2vw,24px);line-height:1.4">
+<sc-if value="{{ contact.hasEmail }}" hint-placeholder-val="{{ false }}"><a href="{{ contact.emailHref }}" style="overflow-wrap:anywhere">{{ contact.email }}</a></sc-if>
+<sc-if value="{{ contact.hasPhone }}" hint-placeholder-val="{{ false }}"><a href="{{ contact.phoneHref }}">{{ contact.phone }}</a></sc-if>
+<sc-if value="{{ contact.hasAddress }}" hint-placeholder-val="{{ false }}"><div style="white-space:pre-line;color:#3D3A33;overflow-wrap:anywhere">{{ contact.address }}</div></sc-if>
+</div>
+</section>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{ isUpdates }}" hint-placeholder-val="{{ false }}">
+<section style="padding:clamp(60px,8vw,100px) 0 clamp(80px,10vw,140px)">
+<sc-if value="{{ updatesNone }}" hint-placeholder-val="{{ false }}"><p style="font-size:22px;line-height:1.5;color:#3D3A33;max-width:560px">{{ updatesNoneText }}</p></sc-if>
+<sc-for list="{{ updateList }}" as="u" hint-placeholder-count="2">
+<article style="max-width:860px;padding:clamp(34px,5vw,56px) 0;border-bottom:1px dashed #CFC8B8">
+<div style="font-family:'Courier Prime',monospace;font-size:13px;color:#6B655A">{{ u.date }}<sc-if value="{{ u.hasTag }}" hint-placeholder-val="{{ false }}"> · <a href="{{ u.tagHref }}" style="color:#1F5C3E">{{ u.tag }}</a></sc-if></div>
+<h2 style="font-weight:400;font-size:clamp(34px,4.4vw,56px);line-height:1.05;letter-spacing:-.02em;margin:14px 0 0;overflow-wrap:anywhere">{{ u.title }}</h2>
+<sc-for list="{{ u.paras }}" as="pa" hint-placeholder-count="2"><p style="font-size:clamp(18px,2.2vw,21px);line-height:1.6;color:#3D3A33;margin:20px 0 0;white-space:pre-line;overflow-wrap:anywhere">{{ pa.t }}</p></sc-for>
+<sc-if value="{{ u.hasPhotos }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-wrap:wrap;gap:18px;margin-top:30px">
+<sc-for list="{{ u.photos }}" as="ph" hint-placeholder-count="2">
+<div onClick="{{ ph.open }}" style="width:clamp(130px,42vw,260px);background:#fff;padding:8px 8px 8px;box-shadow:0 8px 18px -8px rgba(40,30,10,.4);cursor:zoom-in;transition:transform .3s;transform:rotate({{ ph.rot }})" style-hover="transform:translateY(-4px) rotate(0deg)"><img src="{{ ph.url }}" alt="{{ ph.alt }}" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#E6E0D2"></div>
+</sc-for>
+</div>
+</sc-if>
+</article>
+</sc-for>
+<sc-if value="{{ updatesBack }}" hint-placeholder-val="{{ false }}"><div style="margin-top:36px"><a href="#updates" style="display:inline-flex;align-items:center;gap:10px;font-family:'Courier Prime',monospace;font-weight:700;font-size:14px;letter-spacing:.06em;color:#1F5C3E;border:1px solid #1F5C3E;border-radius:999px;padding:14px 26px">← ALL UPDATES</a></div></sc-if>
 </section>
 </sc-if>
 
@@ -287,6 +375,7 @@ a:hover{color:#123A27}
 <sc-for list="{{ bank }}" as="b" hint-placeholder-count="4">
 <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:6px 16px;padding:18px;border-bottom:1px solid rgba(255,255,255,.1)"><span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.08em;color:#BFD6C9">{{ b.k }}</span><span style="font-family:'Geist',sans-serif;font-size:16px;color:#fff;text-align:right">{{ b.v }}</span></div>
 </sc-for>
+<sc-if value="{{ hasBankNote }}" hint-placeholder-val="{{ false }}"><p style="font-family:'Geist',sans-serif;font-size:15px;line-height:1.5;color:#D7E6DD;margin:14px 8px 4px;white-space:pre-line;overflow-wrap:anywhere">{{ bankNote }}</p></sc-if>
 <button onClick="{{ copy }}" style="all:unset;box-sizing:border-box;cursor:pointer;margin-top:10px;width:100%;text-align:center;padding:16px;border-radius:20px;background:#F2B23A;color:#14201A;font-family:'Geist',sans-serif;font-weight:600;font-size:15px;transition:transform .25s,background .25s" style-hover="background:#F7C565;transform:translateY(-1px)">{{ copyLabel }}</button>
 </div>
 </div>
@@ -299,7 +388,7 @@ a:hover{color:#123A27}
 
 <sc-if value="{{ showNext }}" hint-placeholder-val="{{ true }}">
 <a href="{{ nextPage.href }}" style="position:relative;display:flex;align-items:flex-end;height:{{ nextH }};min-height:320px;overflow:hidden;color:#fff;background:#0A3D28">
-<img src="assets/{{ nextPage.img }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%;opacity:.6;transition:transform 1.6s cubic-bezier(.2,.7,.1,1),opacity .6s" style-hover="transform:scale(1.05);opacity:.75">
+<img src="{{ nextPage.url }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%;opacity:.6;transition:transform 1.6s cubic-bezier(.2,.7,.1,1),opacity .6s" style-hover="transform:scale(1.05);opacity:.75">
 <div style="position:relative;width:100%;max-width:1240px;margin:0 auto;padding:0 clamp(20px,4vw,48px) 56px;pointer-events:none">
 <div style="font-family:'Courier Prime',monospace;font-size:13px;letter-spacing:.08em;color:#CFE8D8">NEXT PAGE</div>
 <div style="font-size:clamp(46px,8vw,130px);line-height:.95;letter-spacing:-.03em;margin-top:10px">{{ nextPage.t }} →</div>
@@ -314,7 +403,7 @@ a:hover{color:#123A27}
 
 <sc-if value="{{ lbOpen }}" hint-placeholder-val="{{ false }}">
 <div onClick="{{ closeLb }}" onTouchStart="{{ lbTs }}" onTouchEnd="{{ lbTe }}" style="position:fixed;inset:0;z-index:100;background:rgba(6,30,19,.94);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:4vh 4vw;animation:pgFade .3s both">
-<div style="background:#fff;padding:14px 14px 56px;position:relative;max-width:100%"><img src="assets/{{ lbSrc }}" alt="{{ lbCap }}" style="max-width:min(86vw,1100px);max-height:68svh;display:block"><span style="position:absolute;left:20px;bottom:16px;font-style:italic;font-size:20px;color:#3D3A33">{{ lbCap }}</span></div>
+<div style="background:#fff;padding:14px 14px 56px;position:relative;max-width:100%"><img src="{{ lbUrl }}" alt="{{ lbCap }}" style="max-width:min(86vw,1100px);max-height:68svh;display:block"><span style="position:absolute;left:20px;bottom:16px;font-style:italic;font-size:20px;color:#3D3A33">{{ lbCap }}</span></div>
 <div style="display:flex;gap:20px;align-items:center;font-family:'Courier Prime',monospace;font-size:14px;color:#fff">
 <button onClick="{{ prev }}" style="all:unset;cursor:pointer;padding:14px 20px;border:1px solid rgba(255,255,255,.4);border-radius:999px">← prev</button><span>{{ lbCount }}</span><button onClick="{{ next }}" style="all:unset;cursor:pointer;padding:14px 20px;border:1px solid rgba(255,255,255,.4);border-radius:999px">next →</button>
 </div>
@@ -323,7 +412,9 @@ a:hover{color:#123A27}
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
-const PROGS=[
+// PROGS is the BUILT-IN copy of the programmes (used if the live content can't be loaded).
+// When live content arrives it replaces PROGS, SITE and UPDATES (see applyContent).
+let PROGS=[
 {n:'01',obj:'obj-backpack.png',video:'school-backpacks.mp4',t:'School Supplies',s:'School',m:'Village schools',cap:'every bag, a name',d:'Backpacks and exercise books for children at village schools — each bag printed “Donated by SBC Global Foundation”.',imgs:['school-backpacks-group.png','school-books-1.jpg','school-group-2.jpg','school-backpack.jpg']},
 {n:'02',t:'Disability & Rehabilitation',s:'Rehabilitation',m:'With VAROD, Vavuniya',cap:'medical camp, Vavuniya',d:'With VAROD in Vavuniya: medical camps, home physiotherapy, walkers and rollators, and sport for differently abled young people.',imgs:['varod-medical-women.jpg','rehab-physio-boy.jpg','rehab-walker-elder.jpg','rehab-rollator.jpg']},
 {n:'03',t:'Sunshine Sports',s:'Sport',m:'Colombo, Feb 2026',cap:'they came home with medals',d:'Kit, travel and entry for VAROD athletes at the Sunshine Games in Colombo — 14 February 2026.',imgs:['varod-sunshine-athletes.jpg','varod-sunshine-group.png','varod-jerseys.jpg','varod-pink-team.jpg']},
@@ -338,34 +429,106 @@ const PAGES={
  gallery:{t:'Gallery',img:'varod-sunshine-group.png',k:'Photographs from our partners',d:'Sent home by the priests, sisters and VAROD. Tap any to enlarge.'},
  about:{t:'About us',img:'food-priest-handover.jpg',k:'Since c. 1994',d:'The Old Bens of St. Benedict College, and the people who carry the work out.'},
  give:{t:'Give',img:'water-well-dig.jpg',k:'By bank transfer',d:'This website takes no payments. Here is how to give from your own bank.'}};
+const BUNDLED_BA=PROGS.find(p=>p.ba).ba;
+const A=src=>window.SBCContent.img(src);
+const FALLBACK='placeholder-programme.svg';
+const NUMW=['No','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve'];
+const pad=n=>String(n).padStart(2,'0');
+const fmtDate=iso=>{try{return new Date(iso).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});}catch(e){return '';}};
+// Words on the About page: defaults are the original wording; the editor can change them.
+const SITE_DEFAULTS={about_kicker:'Since c. 1994',about_heading:'Old boys of one college,',about_heading_italic:'one motto.',
+  about_p1:'SBC Global Foundation was started by the Old Bens — past pupils of St. Benedict College — to give something back to the communities around them.',
+  about_p2:'We are a small foundation. We don’t run programmes from afar — we trust the priests and sisters who already know every family by name, and',
+  about_p2_italic:'we help them help.',
+  partners:[{title:'VAROD, Vavuniya',text:'Our partner for medical camps, home therapy and sport for the differently abled.',image:''},
+    {title:'The religious sisters',text:'They run homes for the elderly and tell us what each resident needs.',image:''},
+    {title:'Parish priests',text:'They know every family by name and drive the parcels out themselves.',image:''}],
+  groups_label:'Who carries it out',strip_heading:'The people',strip_heading_italic:'on the ground.',faces_label:'Faces behind it',
+  contact_email:'',contact_phone:'',contact_address:'',bank_note:'',
+  bank_account_name:'',bank_name:'',bank_branch:'',bank_account_no:'',bank_swift:'',bank_reference:''};
+let SITE={...SITE_DEFAULTS};
+let UPDATES=[];
+// The About page's scrolling photo strip and the priests & sisters. Built-in copy; replaced by the live lists.
+const BUNDLED_STRIP=[['act-team-wall.jpg','The parish team, together'],['act-priests-children.jpg','Priests at the school handout'],['people-priest-elders.jpg','With the elders he visits'],['team-sisters-group.jpg','The sisters'],['team-sister-blessing.jpg','A blessing at the parish'],['act-sister-envelope.jpg','Help handed over, in person'],['act-priest-varod.jpg','With VAROD, Vavuniya'],['act-books-handout.jpg','Schoolbooks for every child']].map(([src,caption])=>({src,caption}));
+const BUNDLED_FACES=[['team-01.jpg','center 20%','Fr. —','Parish priest'],['people-sister.jpg','center 18%','Sr. —','Religious sister'],['team-02.jpg','center 14%','Fr. —','Parish priest'],['people-priest-smile.jpg','center 14%','Fr. —','Parish priest'],['team-03.jpg','center 18%','Fr. —','Parish priest'],['people-priest-garden.jpg','center 14%','Fr. —','Parish priest'],['team-04.jpg','center 16%','Fr. —','Parish priest'],['team-05.jpg','center 14%','Fr. —','Parish priest'],['people-sister-priest.jpg','center 25%','Sr. — & Fr. —','Sister & priest']].map(([src,focus,name,role])=>({src,focus,name,role}));
+let STRIP=BUNDLED_STRIP.slice();
+let FACES=BUNDLED_FACES.slice();
+let GALLERY=[];     // photos the editor added to the Gallery page directly (shown first)
 const Q=(()=>{const o={};new URLSearchParams(location.search).forEach((v,k)=>{if(v!==''&&!isNaN(+v))o[k]=+v;});return o;})();
 const ORDER=['home','programmes','gallery','about','give'];
 const ROT=['-2deg','1.5deg','-1deg','2.5deg','-2.5deg','1deg'];
-const FACES=[
-  {img:'team-01.png',pos:'center 20%',name:'Fr. —',role:'Parish priest'},
-  {img:'people-sister.png',pos:'center 18%',name:'Sr. —',role:'Religious sister'},
-  {img:'team-02.jpg',pos:'center 14%',name:'Fr. —',role:'Parish priest'},
-  {img:'people-priest-smile.png',pos:'center 14%',name:'Fr. —',role:'Parish priest'},
-  {img:'team-03.png',pos:'center 18%',name:'Fr. —',role:'Parish priest'},
-  {img:'people-priest-garden.png',pos:'center 14%',name:'Fr. —',role:'Parish priest'},
-  {img:'team-04.png',pos:'center 16%',name:'Fr. —',role:'Parish priest'},
-  {img:'team-05.jpg',pos:'center 14%',name:'Fr. —',role:'Parish priest'},
-  {img:'people-sister-priest.png',pos:'center 25%',name:'Sr. — & Fr. —',role:'Sister & priest'}
-];
 class Component extends DCLogic {
   tabsRef=React.createRef();
-  state={face:-1,baSound:false,baSite:0,baPos:50,mhHide:false,mhSolid:false,sound:false,mobile:false,route:'home',sticky:false,menu:false,active:0,wide:true,lb:-1,copied:false,filter:-1};
-  constructor(p){super(p);this.all=[];this.caps={};this.tag={};
-    PROGS.forEach((pr,pi)=>pr.imgs.forEach(f=>{if(!(f in this.caps)){this.all.push(f);this.caps[f]=pr.ba?(/before/.test(f)?'Before — '+pr.t:/after/.test(f)?'After — '+pr.t:'Building — '+pr.t):pr.t;this.tag[f]=pi;}}));}
-  parse(){const h=(location.hash||'#home').slice(1);return ORDER.includes(h)?h:(h.startsWith('programme')?'programmes':'home');}
-  open(f){this.setState({lb:this.all.indexOf(f)});}
-  step(d){const n=this.all.length;this.setState(s=>({lb:(s.lb+d+n)%n}));}
+  state={baSound:false,baSite:0,baPos:50,mhHide:false,mhSolid:false,sound:false,mobile:false,route:'home',sticky:false,menu:false,active:0,wide:true,lb:-1,copied:false,filter:-1,loaded:false,yt:{},face:-1};
+  constructor(p){super(p);this.rebuild();}
+  // Gallery = every programme photo once (first programme wins), tagged with its programme.
+  rebuild(){this.all=[];this.caps={};this.tag={};
+    GALLERY.forEach(g=>{const f=g.src;if(f&&!(f in this.caps)){this.all.push(f);this.caps[f]=g.caption||'';this.tag[f]=PROGS.length;}});
+    PROGS.forEach((pr,pi)=>pr.imgs.forEach(f=>{if(!(f in this.caps)){this.all.push(f);this.caps[f]=pr.ba?(/before/.test(f)?'Before — '+pr.t:/after/.test(f)?'After — '+pr.t:'Building — '+pr.t):pr.t;this.tag[f]=pi;}}));
+    PAGES.programmes.k=this.kinds()+' kinds of help';}
+  kinds(){return NUMW[PROGS.length]||String(PROGS.length);}
+  // Give page rows. Until the owner fills them in, these read exactly as the original page did.
+  bankRows(){const b=k=>String(SITE[k]||'').trim();
+    const rows=[['ACCOUNT NAME',b('bank_account_name')||'SBC Global Foundation'],['BANK',b('bank_name')||'To be added']];
+    if(b('bank_branch'))rows.push(['BRANCH',b('bank_branch')]);
+    rows.push(['ACCOUNT NO.',b('bank_account_no')||'To be added']);
+    if(b('bank_swift'))rows.push(['SWIFT / BIC',b('bank_swift')]);
+    rows.push(['REFERENCE',b('bank_reference')||'Your full name']);return rows;}
+  bankFilled(){return !!(String(SITE.bank_name||'').trim()&&String(SITE.bank_account_no||'').trim());}
+  // Receives the live content (or the built-in fallback) from content.js.
+  applyContent(r){
+    const c=r&&r.content;
+    if(c){
+      PROGS=c.programmes.map(x=>{const e=x.extras||{};const o={id:x.id,slug:x.slug,n:pad(x.position+1),t:x.name,s:x.short_label,m:x.context,cap:x.caption,d:x.description,imgs:x.images.slice(),date:x.date||null,videos:Array.isArray(x.videos)?x.videos.slice():[]};
+        ['video','obj','ba'].forEach(k=>{if(e[k]!==undefined)o[k]=e[k];});return o;});
+      SITE={...SITE_DEFAULTS};
+      Object.keys(c.site||{}).forEach(k=>{const v=c.site[k];if(k==='partners'){if(Array.isArray(v))SITE.partners=v;return;}if(typeof v!=='string')return;if(k.startsWith('contact_')||v.trim())SITE[k]=v;});
+      UPDATES=c.updates.map(u=>({...u}));
+      if(Array.isArray(c.strip))STRIP=c.strip.map(x=>({src:x.src,caption:x.caption||''}));
+      if(Array.isArray(c.faces))FACES=c.faces.map(x=>({src:x.src,name:x.name||'',role:x.role||'',focus:x.focus||'center 20%'}));
+      GALLERY=Array.isArray(c.gallery)?c.gallery.map(g=>typeof g==='string'?{src:g,caption:''}:{src:g.src,caption:g.caption||''}):[];
+    }
+    document.documentElement.setAttribute('data-sbc-source',r?r.source:'bundled');
+    this.rebuild();
+    this.setState({loaded:true});this.observe();this.scrollToTarget();
+  }
+  scrollToTarget(){const raw=this.targetRaw;if(raw==null)return;this.targetRaw=null;
+    let i=/^\d+$/.test(raw)?+raw:PROGS.findIndex(p=>p.slug===raw);
+    if(i>=0&&i<PROGS.length)setTimeout(()=>this.jump(i),250);}
+  openAt(list,caps,j){this.lbList=list;this.lbCapList=caps;this.setState({lb:j});}
+  updText(u){const tag=u.programme_id?PROGS.findIndex(p=>p.id===u.programme_id):-1;
+    const paras=u.body.split(/\n{2,}/).map(t=>({t:t.trim()})).filter(x=>x.t);
+    let ex=paras.length?paras[0].t.replace(/\s+/g,' '):'';if(ex.length>170)ex=ex.slice(0,170).replace(/\s+\S*$/,'')+'…';
+    return {id:u.id,title:u.title,date:fmtDate(u.published_at),href:'#update/'+u.id,hasTag:tag>=0,tag:tag>=0?PROGS[tag].t:'',tagHref:'#programme/'+tag,paras,excerpt:ex};}
+  updFull(u){const t=this.updText(u);const caps=u.images.map(()=>u.title);
+    return {...t,hasPhotos:u.images.length>0,photos:u.images.map((src,j)=>({url:A(src),alt:u.title+' — photo '+(j+1),rot:ROT[j%ROT.length],open:()=>this.openAt(u.images,caps,j)}))};}
+  updCard(u){const t=this.updText(u);const hasLead=u.images.length>0;return {...t,hasLead,leadUrl:hasLead?A(u.images[0]):'',textPad:hasLead?'18px 8px 0':'14px 8px 0'};}
+  progUpdates(i){const id=PROGS[i].id;const ups=id?UPDATES.filter(u=>u.programme_id===id).slice(0,3).map(u=>({href:'#update/'+u.id,title:u.title,date:fmtDate(u.published_at)})):[];return {updates:ups,hasUpdates:ups.length>0};}
+  updatesHero(route){
+    if(route==='updates')return {t:'Updates',img:'food-van.jpg',k:'From the field',d:'Short notes after each activity, sent home by the priests and sisters.'};
+    if(route.startsWith('update/')){const u=UPDATES.find(x=>x.id===route.slice(7));
+      return {t:'Update',img:(u&&u.images[0])||'food-van.jpg',k:u?fmtDate(u.published_at):'From the field',d:''};}
+    return null;}
+  // Old links keep working: #programme/<n> opens the Programmes page and scrolls to programme n
+  // (n counts from 0, in the original order; new programmes are added after the first eight).
+  parse(){const h=(location.hash||'#home').slice(1);this.targetRaw=null;
+    if(ORDER.includes(h))return h;
+    if(h==='updates')return 'updates';
+    if(h.startsWith('update/'))return 'update/'+h.slice(7);
+    if(h.startsWith('programme')){const k=h.split('/')[1];if(k)this.targetRaw=decodeURIComponent(k);return 'programmes';}
+    return 'home';}
+  open(f){this.lbList=this.all;this.lbCapList=this.all.map(x=>this.caps[x]);this.setState({lb:this.all.indexOf(f)});}
+  step(d){const n=(this.lbList||this.all).length;this.setState(s=>({lb:(s.lb+d+n)%n}));}
   jump(i){const el=document.querySelector('[data-card="'+i+'"]');if(el)window.scrollTo({top:el.getBoundingClientRect().top+scrollY-120,behavior:'smooth'});}
-  vids(){setTimeout(()=>document.querySelectorAll('video').forEach(v=>{v.defaultMuted=true;v.muted=!this.state.sound;v.play().catch(()=>{});}),60);}
+  vids(){setTimeout(()=>document.querySelectorAll('video:not([data-user-video])').forEach(v=>{v.defaultMuted=true;v.muted=!this.state.sound;v.play().catch(()=>{});}),60);}
   observe(){this.vids();this.cardIO&&this.cardIO.disconnect();setTimeout(()=>{this.cardIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const a=+e.target.dataset.card;this.setState({active:a});const t=this.tabsRef.current,b=t&&t.querySelector('[data-tab="'+a+'"]');if(b)t.scrollTo({left:b.offsetLeft-20,behavior:'smooth'});}}),{rootMargin:'-45% 0px -50% 0px'});document.querySelectorAll('[data-card]').forEach(c=>this.cardIO.observe(c));},80);}
   componentDidMount(){
-    this.state.route=this.parse();this.forceUpdate();this.observe();if(/[?&]menu=1/.test(location.search))setTimeout(()=>this.setState({menu:true}),300);
-    this.onHash=()=>{this.setState({route:this.parse(),menu:false,filter:-1});window.scrollTo(0,0);this.observe();};
+    this.state.route=this.parse();this.forceUpdate();this.observe();
+    // Wait (briefly) for the live content before showing the page, so nobody sees old text flash by.
+    window.SBCContent.ready.then(r=>this.applyContent(r),()=>this.applyContent(null));
+    window.SBCContent.settled.then(r=>{if(r&&r.source==='live')this.applyContent(r);},()=>{});
+    setTimeout(()=>{if(!this.state.loaded)this.applyContent(null);},4000);
+    this.onHash=()=>{this.setState({route:this.parse(),menu:false,filter:-1});window.scrollTo(0,0);this.observe();this.scrollToTarget();};
     window.addEventListener('hashchange',this.onHash);
     this.onScroll=()=>{const s=scrollY>=100;if(s!==this.state.sticky||(this.state.menu&&!this.state.mobile))this.setState({sticky:s,menu:this.state.mobile?this.state.menu:false});};
     window.addEventListener('scroll',this.onScroll,{passive:true});
@@ -384,20 +547,22 @@ class Component extends DCLogic {
     const isDetail=route.startsWith('programme/');const di=isDetail?Math.min(PROGS.length-1,Math.max(0,+route.split('/')[1]||0)):0;
     const base=isDetail?'programmes':route;
     const P=PROGS[di];
-    const hero=isDetail?{t:P.t,img:P.imgs[0],k:'Entry '+P.n+' · '+P.m,d:P.cap.charAt(0).toUpperCase()+P.cap.slice(1)+'.'}:(PAGES[route]||PAGES.programmes);
+    const hero=isDetail?{t:P.t,img:P.imgs[0]||FALLBACK,k:'Entry '+P.n+' · '+P.m,d:P.cap.charAt(0).toUpperCase()+P.cap.slice(1)+'.'}:(this.updatesHero(route)||PAGES[route]||PAGES.programmes);
     let nextPage;
     if(isDetail){const q=PROGS[(di+1)%PROGS.length];nextPage={t:q.t,img:q.imgs[0],href:'#programme/'+((di+1)%PROGS.length)};}
     else{const nx=ORDER[(ORDER.indexOf(route)+1)%ORDER.length]||'programmes';nextPage=nx==='home'?{t:'Home',img:'school-backpacks-group.png',href:'#home'}:{t:PAGES[nx].t,img:PAGES[nx].img,href:'#'+nx};}
+    nextPage={...nextPage,url:A(nextPage.img)};
     const gal=this.all.filter(f=>filter<0||this.tag[f]===filter);
-    const s=lb>=0?this.all[lb]:'';
+    const lbl=this.lbList||this.all;
+    const s=lb>=0?(lbl[lb]||''):'';
+    const upd=route.startsWith('update/')?UPDATES.filter(u=>u.id===route.slice(7)):(route==='updates'?UPDATES:[]);
+    const contactClean=k=>String(SITE[k]||'').trim();
+    const cEmail=contactClean('contact_email'),cPhone=contactClean('contact_phone'),cAddr=contactClean('contact_address');
     return {
-      isMob:mobile,benR:mobile?'-20%':'-2%',benH:mobile?'60%':'75%',ptCols:mobile?'minmax(0,1fr)':'repeat(3,minmax(0,1fr))',showNext:route!=='about',stripH:mobile?'300px':'460px',
-      strip:[['act-team-wall.png','The parish team, together'],['act-priests-children.jpg','Priests at the school handout'],['people-priest-elders.png','With the elders he visits'],['team-sisters-group.png','The sisters'],['team-sister-blessing.png','A blessing at the parish'],['act-sister-envelope.jpg','Help handed over, in person'],['act-priest-varod.jpg','With VAROD, Vavuniya'],['act-books-handout.jpg','Schoolbooks for every child']].map(([img,cap],k)=>({img,cap,n:String(k+1).padStart(2,'0')})),
-      faces:FACES.map((p,k)=>{const on=this.state.face===k,base=mobile?46:60,big=mobile?84:110;return {...p,size:(on?big:base)+'px',z:on?20:10,op:on?1:0,ty:on?'0':'-6px',on:()=>this.setState({face:k}),off:()=>this.setState({face:-1})};}),pplCols:mobile?'minmax(0,1fr)':'minmax(0,5fr) minmax(0,7fr)',pplPos:mobile?'static':'sticky',pplMas:'2',
-      people:[['people-priest-elders.png','A parish priest with the elders he visits'],['people-sister.png','A religious sister'],['people-priest-garden.png','Parish priest'],['people-sister-priest.png','Sister and priest, side by side'],['people-priest-smile.png','Parish priest'],['people-priest-seated.jpg','Parish priest'],['people-priest-glasses.png','A quiet moment']].map(([src,cap],k)=>({src,cap,n:String(k+1).padStart(2,'0')})),...(()=>{const BA=PROGS.find(p=>p.ba).ba,i=this.state.baSite,c=BA[i];return {baBefore:c.b,baAfter:c.a,baFit:'cover',baKey:'ba'+i,baCols:mobile?'minmax(0,1fr)':'minmax(0,1fr) minmax(0,1fr)',baAfterTagL:mobile?'14px':'calc(50% + 15px)',baAfterTagT:mobile?'calc(50% + 15px)':'14px',baGap:mobile?'44px':'clamp(40px,6vw,88px)',baMed:mobile?'64px':'clamp(72px,7vw,104px)',baMedTop:'50%',
+      isMob:mobile,benR:mobile?'-20%':'-2%',benH:mobile?'60%':'75%',...(()=>{const BA=(PROGS.find(p=>p.ba)||{ba:BUNDLED_BA}).ba,i=Math.min(this.state.baSite,BA.length-1),c=BA[i];return {baBefore:c.b,baBeforeUrl:A(c.b),baAfter:c.a,baAfterUrl:A(c.a),baAfterVideoUrl:c.a?A(c.a+'.mp4'):'',baAfterPosterUrl:c.a?A(c.a+'-poster.png'):'',baAfterBgUrl:c.a?A(/\.(png|jpe?g)$/.test(c.a)?c.a:c.a+'-poster.png'):'',baFit:'cover',baKey:'ba'+i,baCols:mobile?'minmax(0,1fr)':'minmax(0,1fr) minmax(0,1fr)',baAfterTagL:mobile?'14px':'calc(50% + 15px)',baAfterTagT:mobile?'calc(50% + 15px)':'14px',baGap:mobile?'44px':'clamp(40px,6vw,88px)',baMed:mobile?'64px':'clamp(72px,7vw,104px)',baMedTop:'50%',
   baPrev:()=>this.setState(s=>({baSite:(s.baSite-1+BA.length)%BA.length})),baNext:()=>this.setState(s=>({baSite:(s.baSite+1)%BA.length})),
-  baTs:e=>{this.bx=e.touches[0].clientX;},baTe:e=>{const d=e.changedTouches[0].clientX-(this.bx||0);if(Math.abs(d)>50)this.setState(s=>({baSite:(s.baSite+(d<0?1:-1)+BA.length)%BA.length}));},baBPos:c.bPos||'center',baAfterImg:/\.(png|jpe?g)$/.test(c.a),baAfterVid:!!c.a&&!/\.(png|jpe?g)$/.test(c.a),baAfterBg:/\.(png|jpe?g)$/.test(c.a)?c.a:c.a+'-poster.png',baHasAfter:!!c.a,baNoAfter:!c.a,baPos:this.state.baPos+'%',baClip:'inset(0 '+(100-this.state.baPos)+'% 0 0)',baVal:this.state.baPos,baSet:e=>this.setState({baPos:+e.target.value}),baTitle:c.t,baRatio:mobile?'3/4':'2/1',baMuted:!this.state.baSound,baSoundLabel:this.state.baSound?'Sound on ♪':'Sound off',toggleBaSound:()=>this.setState(s=>({baSound:!s.baSound})),baFilms:[{src:'toilet-after-1',cap:'New doors, tiled walls, running water'},{src:'toilet-after-2',cap:'A shower and a tap that works'}],baNum:'0'+(i+1),baCount:'0'+BA.length,
-  baSites:BA.map((s,j)=>({n:'0'+(j+1),t:s.t,thumb:s.b,status:s.a?'Rebuilt':'In progress',dot:s.a?'#9FD9B4':'#E8C36A',bg:j===i?'rgba(255,255,255,.1)':'transparent',ink:j===i?'#fff':'rgba(255,255,255,.72)',line:j===i?'#9FD9B4':'transparent',op:j===i?1:.55,pick:()=>this.setState({baSite:j,baPos:50})}))};})(),deskOnly:mobile?'none':'block',wmW:mobile?('min(560px,'+(Q.size??62)+'vw)'):'min(680px,56vw)',mLogo:this.state.mhSolid?'60px':'80px',homeShade:mobile?'radial-gradient(110% 48% at 0% 8%,rgba(7,48,28,.95) 0%,rgba(7,48,28,.82) 40%,rgba(7,48,28,0) 78%),linear-gradient(180deg,rgba(7,48,28,.35) 0%,rgba(7,48,28,0) 30%)':'none',homeImg:mobile?'hero-mobile.png':'hero-desktop-4.png',homePos:mobile?'center 55%':'center 50%',heroFit:mobile?'contain':'cover',heroPos:mobile?'center 68%':'center 40%',heroMin:mobile?'520px':'640px',subH:mobile?'78svh':'88svh',heapTop:mobile?'-64px':'calc(-1 * clamp(90px,12vw,190px))',heapW:mobile?'132px':'clamp(150px,22vw,320px)',
+  baTs:e=>{this.bx=e.touches[0].clientX;},baTe:e=>{const d=e.changedTouches[0].clientX-(this.bx||0);if(Math.abs(d)>50)this.setState(s=>({baSite:(s.baSite+(d<0?1:-1)+BA.length)%BA.length}));},baBPos:c.bPos||'center',baAfterImg:/\.(png|jpe?g)$/.test(c.a),baAfterVid:!!c.a&&!/\.(png|jpe?g)$/.test(c.a),baAfterBg:/\.(png|jpe?g)$/.test(c.a)?c.a:c.a+'-poster.png',baHasAfter:!!c.a,baNoAfter:!c.a,baPos:this.state.baPos+'%',baClip:'inset(0 '+(100-this.state.baPos)+'% 0 0)',baVal:this.state.baPos,baSet:e=>this.setState({baPos:+e.target.value}),baTitle:c.t,baRatio:mobile?'3/4':'2/1',baMuted:!this.state.baSound,baSoundLabel:this.state.baSound?'Sound on ♪':'Sound off',toggleBaSound:()=>this.setState(s=>({baSound:!s.baSound})),baFilms:[{src:'toilet-after-1',cap:'New doors, tiled walls, running water'},{src:'toilet-after-2',cap:'A shower and a tap that works'}].map(f=>({...f,videoUrl:A(f.src+'.mp4'),posterUrl:A(f.src+'-poster.png')})),baNum:'0'+(i+1),baCount:'0'+BA.length,
+  baSites:BA.map((s,j)=>({n:'0'+(j+1),t:s.t,thumb:s.b,thumbUrl:A(s.b),status:s.a?'Rebuilt':'In progress',dot:s.a?'#9FD9B4':'#E8C36A',bg:j===i?'rgba(255,255,255,.1)':'transparent',ink:j===i?'#fff':'rgba(255,255,255,.72)',line:j===i?'#9FD9B4':'transparent',op:j===i?1:.55,pick:()=>this.setState({baSite:j,baPos:50})}))};})(),deskOnly:mobile?'none':'block',wmW:mobile?('min(560px,'+(Q.size??62)+'vw)'):'min(680px,56vw)',mLogo:this.state.mhSolid?'60px':'80px',homeShade:mobile?'radial-gradient(110% 48% at 0% 8%,rgba(7,48,28,.95) 0%,rgba(7,48,28,.82) 40%,rgba(7,48,28,0) 78%),linear-gradient(180deg,rgba(7,48,28,.35) 0%,rgba(7,48,28,0) 30%)':'none',homeUrl:A(mobile?'hero-mobile.png':'hero-desktop-4.png'),pageVis:this.state.loaded?'visible':'hidden',homePos:mobile?'center 55%':'center 50%',heroFit:mobile?'contain':'cover',heroPos:mobile?'center 68%':'center 40%',heroMin:mobile?'520px':'640px',subH:mobile?'78svh':'88svh',heapTop:mobile?'-64px':'calc(-1 * clamp(90px,12vw,190px))',heapW:mobile?'132px':'clamp(150px,22vw,320px)',
       objR:mobile?'-4%':'-12%',objB:mobile?'-10%':'-14%',objW:mobile?'34%':'38%',galCols:mobile?'2':'4 160px',galPad:mobile?'6px 6px 28px':'8px 8px 34px',galCapFs:mobile?'13px':'15px',nextH:mobile?'50svh':'60vh',footDir:mobile?'column':'row',
       lbTs:e=>{this.tx=e.touches[0].clientX;},lbTe:e=>{const d=e.changedTouches[0].clientX-(this.tx||0);if(Math.abs(d)>50){e.preventDefault();this.step(d<0?1:-1);}},wmM:mobile?'0':'24px 0 0',subM:mobile?((Q.sub??-6)+'px 0 0'):'-14px 0 0',subFs:mobile?'18px':'24px',heroTop:mobile?((Q.top??100)+'px'):'max(190px, 24vh)',badgeDisp:mobile?'none':'block',navDisp:mobile?'none':'flex',
       mhY:this.state.mhHide&&!menu?'-110%':'0',mhBg:this.state.mhSolid?'rgba(255,255,255,.86)':'transparent',mhBlur:this.state.mhSolid?'blur(14px)':'none',mhLine:this.state.mhSolid?'rgba(10,61,40,.1)':'transparent',mhBtnBg:this.state.mhSolid?'#0A3D28':'transparent',mhGiveLine:this.state.mhSolid?'rgba(10,61,40,.25)':'transparent',
@@ -414,23 +579,39 @@ class Component extends DCLogic {
       mobileMenu:mobile&&menu,narrow:!wide,
       pageFilter:menu&&!mobile?'blur(20px)':'none',pageTf:menu&&!mobile?'scale(1.2)':'none',pageOp:menu&&!mobile?.6:1,
       navLinks:ORDER.map((r,i)=>({t:r==='about'?'about us':r,label:r==='about'?'About us':r.charAt(0).toUpperCase()+r.slice(1),num:'0'+(i+1),href:'#'+r,ink:r===base?'#fff':'rgba(255,255,255,.72)'})),
-      isHome:route==='home',isSub:route!=='home'&&route!=='give'&&route!=='gallery'&&route!=='about',galTop:mobile?'110px':'200px',navBgc:(route==='gallery'||route==='about')?'#0A3D28':'rgba(10,61,40,.35)',giveTop:mobile?'100px':'190px',isProgrammes:route==='programmes',isDetail,isGallery:route==='gallery',isAbout:route==='about',isGive:route==='give',
+      isHome:route==='home',isSub:route!=='home'&&route!=='give'&&route!=='gallery'&&route!=='about',galTop:mobile?'110px':'200px',navBgc:(route==='gallery'||route==='about')?'#0A3D28':'rgba(10,61,40,.35)',ptCols:mobile?'minmax(0,1fr)':'repeat(3,minmax(0,1fr))',showNext:route!=='about',stripH:mobile?'300px':'460px',giveTop:mobile?'100px':'190px',isProgrammes:route==='programmes',isDetail,isGallery:route==='gallery',isAbout:route==='about',isGive:route==='give',
       hero,nextPage,wide,
       slides:[
-        {k:'01 — Eight kinds of help',t:'Programmes.',d:'School bags, rice, wells, wheelchairs — and the Sunshine Games.',img:'food-van.jpg',href:'#programmes',cta:'SEE THE PROGRAMMES'},
+        {k:'01 — '+this.kinds()+' kinds of help',t:'Programmes.',d:'School bags, rice, wells, wheelchairs — and the Sunshine Games.',img:'food-van.jpg',href:'#programmes',cta:'SEE THE PROGRAMMES'},
         {k:'02 — From our partners',t:'Gallery.',d:'Photographs sent home by the priests, sisters and VAROD.',img:'varod-sunshine-athletes.jpg',href:'#gallery',cta:'OPEN THE GALLERY'},
         {k:'03 — Since c. 1994',t:'About us.',d:'The Old Bens of St. Benedict College, and how the work is done.',img:'elder-wheelchairs-sisters.jpg',href:'#about',cta:'READ OUR STORY'},
-        {k:'04 — By bank transfer',t:'Give.',d:'From your own bank, with your name as the reference.',img:'water-well-dig.jpg',href:'#give',cta:'HOW TO GIVE'}],
-      programmes:PROGS.map((p,i)=>({...p,idx:i,main:p.imgs[0],rot:i%2?'2deg':'-2.5deg',jump:()=>this.jump(i),hasObj:!!p.obj,hasBA:!!p.ba,hasVideo:!!p.video,noVideo:!p.video,openMain:p.video?(()=>{const s=!this.state.sound;this.setState({sound:s});document.querySelectorAll('video').forEach(v=>{v.muted=!s;v.play().catch(()=>{});});}):(()=>this.open(p.imgs[0])),thumbs:p.imgs.slice(1).map(x=>{const lab=p.ba?(/before/.test(x)?'Before':/after/.test(x)?'After':'Building'):'';return {src:x,open:()=>this.open(x),lab,hasLab:!!lab,labBg:lab==='After'?'#1F5C3E':lab==='Before'?'#3D3A33':'#8A6A1E'};}),navColor:i===active?'#1F5C3E':'#9A948A',tabBg:i===active?'#1F5C3E':'#fff',tabInk:i===active?'#fff':'#1F5C3E',barW:i===active?'100%':'0%'})),
-      cur:{d:P.d,prints:P.imgs.map((f,j)=>({src:f,k:'Plate '+(j+1)+' of 4',rot:ROT[j],open:()=>this.open(f)}))},
-      detailMeta:[{k:'Entry',v:P.n+' of 0'+PROGS.length},{k:'Where',v:P.m},{k:'Photographs',v:'4'}],
-      filters:[{t:'All',i:-1},...PROGS.map((p,i)=>({t:p.s,i}))].map(x=>({t:x.t,bg:x.i===filter?'#1F5C3E':'transparent',ink:x.i===filter?'#fff':'#1F5C3E',go:()=>this.setState({filter:x.i})})),
-      gallery:gal.map((f,i)=>({src:f,cap:this.caps[f],rot:ROT[i%ROT.length],open:()=>this.open(f)})),
-      partners:[{n:'01',role:'Partner',img:'varod-sunshine-athletes.jpg',pos:'center',t:'VAROD, Vavuniya',d:'Our partner for medical camps, home therapy and sport for the differently abled.'},{n:'02',role:'Homes for the elderly',img:'elder-wheelchairs-sisters.jpg',pos:'center',t:'The religious sisters',d:'They run homes for the elderly and tell us what each resident needs.'},{n:'03',role:'Parishes',img:'food-truck-priest.jpg',pos:'center',t:'Parish priests',d:'They know every family by name and drive the parcels out themselves.'}],
-      bank:[{k:'ACCOUNT NAME',v:'SBC Global Foundation'},{k:'BANK',v:'To be added'},{k:'ACCOUNT NO.',v:'To be added'},{k:'REFERENCE',v:'Your full name'}],
+        {k:'04 — By bank transfer',t:'Give.',d:'From your own bank, with your name as the reference.',img:'water-well-dig.jpg',href:'#give',cta:'HOW TO GIVE'}].map(x=>({...x,url:A(x.img)})),
+      heroUrl:A(hero.img),isUpdates:route==='updates'||route.startsWith('update/'),
+      updateList:upd.map(u=>this.updFull(u)),updatesNone:upd.length===0,
+      updatesNoneText:route==='updates'?'There are no updates yet.':'This update is not on the website any more.',
+      updatesBack:route.startsWith('update/')&&upd.length>0,
+      hasHomeUpdates:UPDATES.length>0,homeUpdates:UPDATES.slice(0,3).map(u=>this.updCard(u)),moreUpdates:UPDATES.length>3,
+      about:{kicker:SITE.about_kicker,heading:SITE.about_heading,headingItalic:SITE.about_heading_italic,p1:SITE.about_p1,p2:SITE.about_p2,p2Italic:SITE.about_p2_italic,groupsLabel:SITE.groups_label,stripHeading:SITE.strip_heading,stripItalic:SITE.strip_heading_italic,facesLabel:SITE.faces_label},
+      strip:STRIP.map((x,k)=>{const n=String(k+1).padStart(2,'0');return {url:A(x.src),cap:x.caption,label:x.caption?n+' — '+x.caption:n};}),hasStrip:STRIP.length>0,
+      faces:FACES.map((p,k)=>{const on=this.state.face===k,base=mobile?46:60,big=mobile?84:110;return {url:A(p.src),pos:p.focus,name:p.name,role:p.role,hasRole:!!p.role,alt:p.name+(p.role?', '+p.role:''),size:(on?big:base)+'px',z:on?20:10,op:on?1:0,ty:on?'0':'-6px',on:()=>this.setState({face:k}),off:()=>this.setState({face:-1})};}),hasFaces:FACES.length>0,
+      hasPeople:STRIP.length>0||FACES.length>0,hasAboutLower:(SITE.partners||[]).some(g=>g&&(g.title||g.text))||STRIP.length>0||FACES.length>0,
+      hasContact:!!(cEmail||cPhone||cAddr),
+      contact:{hasEmail:!!cEmail,email:cEmail,emailHref:'mailto:'+cEmail,hasPhone:!!cPhone,phone:cPhone,phoneHref:'tel:'+cPhone.replace(/[^\d+]/g,''),hasAddress:!!cAddr,address:cAddr},
+      programmes:PROGS.map((p,i)=>({...p,idx:i,main:p.imgs[0]||FALLBACK,mainUrl:A(p.imgs[0]||FALLBACK),videoUrl:p.video?A(p.video):'',objUrl:p.obj?A(p.obj):'',...this.progUpdates(i),meta:'Entry '+p.n+' · '+p.m+(p.date?' · '+fmtDate(p.date+'T12:00:00'):''),hasVideos:(p.videos||[]).length>0,
+        userVideos:(p.videos||[]).map((v,vi)=>{const key=(p.id||i)+':'+vi;
+          if(v.kind==='youtube'&&v.youtube_id){const playing=!!this.state.yt[key];
+            return {isUp:false,ytIdle:!playing,ytPlay:playing,thumb:'https://i.ytimg.com/vi/'+v.youtube_id+'/hqdefault.jpg',embed:'https://www.youtube-nocookie.com/embed/'+v.youtube_id+'?autoplay=1&rel=0',play:()=>this.setState(s=>({yt:{...s.yt,[key]:true}})),on:true};}
+          return {isUp:true,ytIdle:false,ytPlay:false,url:window.SBCContent.video(v.src),posterUrl:v.poster?A(v.poster):'',on:true};}),rot:i%2?'2deg':'-2.5deg',jump:()=>this.jump(i),hasObj:!!p.obj,hasBA:!!p.ba,hasVideo:!!p.video,noVideo:!p.video,openMain:p.video?(()=>{const s=!this.state.sound;this.setState({sound:s});document.querySelectorAll('video:not([data-user-video])').forEach(v=>{v.muted=!s;v.play().catch(()=>{});});}):(()=>this.open(p.imgs[0])),thumbs:p.imgs.slice(1).map(x=>{const lab=p.ba?(/before/.test(x)?'Before':/after/.test(x)?'After':'Building'):'';return {src:x,url:A(x),open:()=>this.open(x),lab,hasLab:!!lab,labBg:lab==='After'?'#1F5C3E':lab==='Before'?'#3D3A33':'#8A6A1E'};}),navColor:i===active?'#1F5C3E':'#9A948A',tabBg:i===active?'#1F5C3E':'#fff',tabInk:i===active?'#fff':'#1F5C3E',barW:i===active?'100%':'0%'})),
+      cur:{d:P.d,prints:P.imgs.map((f,j)=>({src:f,k:'Plate '+(j+1)+' of '+P.imgs.length,rot:ROT[j%ROT.length],open:()=>this.open(f)}))},
+      detailMeta:[{k:'Entry',v:P.n+' of '+pad(PROGS.length)},{k:'Where',v:P.m},{k:'Photographs',v:String(P.imgs.length)}],
+      filters:[{t:'All',i:-1},...PROGS.map((p,i)=>({t:p.s,i})),...(GALLERY.length?[{t:'More photos',i:PROGS.length}]:[])].map(x=>({t:x.t,bg:x.i===filter?'#1F5C3E':'transparent',ink:x.i===filter?'#fff':'#1F5C3E',go:()=>this.setState({filter:x.i})})),
+      gallery:gal.map((f,i)=>({src:f,url:A(f),cap:this.caps[f],rot:ROT[i%ROT.length],open:()=>this.open(f)})),
+      partners:(SITE.partners||[]).filter(g=>g&&(g.title||g.text)).map(g=>({t:g.title||'',d:g.text||'',hasImg:!!g.image,imgUrl:g.image?A(g.image):''})),
+      hasPartners:(SITE.partners||[]).some(g=>g&&(g.title||g.text)),
+      bank:this.bankRows().map(([k,v])=>({k,v})),hasBankNote:!!String(SITE.bank_note||'').trim(),bankNote:String(SITE.bank_note||'').trim(),
       soundLabel:this.state.sound?'♪ sound on':'tap for sound',copyLabel:copied?'Copied ✓':'Copy account details',
-      copy:()=>{try{navigator.clipboard.writeText('SBC Global Foundation');}catch(e){}this.setState({copied:true});setTimeout(()=>this.setState({copied:false}),1800);},
-      lbOpen:lb>=0,lbSrc:s,lbCap:this.caps[s]||'',lbCount:(lb+1)+' / '+this.all.length,
+      copy:()=>{try{navigator.clipboard.writeText(this.bankFilled()?this.bankRows().map(([k,v])=>k+': '+v).join('\n'):'SBC Global Foundation');}catch(e){}this.setState({copied:true});setTimeout(()=>this.setState({copied:false}),1800);},
+      lbOpen:lb>=0&&!!s,lbSrc:s,lbUrl:A(s),lbCap:(this.lbCapList||[])[lb]||'',lbCount:(lb+1)+' / '+lbl.length,
       closeLb:()=>this.setState({lb:-1}),prev:e=>{e.stopPropagation();this.step(-1);},next:e=>{e.stopPropagation();this.step(1);}
     };
   }
